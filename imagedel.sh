@@ -8,7 +8,7 @@ DATE=$(date +%Y%m%d)
 echo $DOCKER_STORAGE_SIZE > /home/devuser/danli/imagesize.txt
 if [ "$DOCKER_STORAGE_SIZE" -gt "$GC_SIZE" ]
     then sudo docker rmi `sudo docker images -q -f "dangling=true"`
-    else echo $DATE docker storage size `sudo du -s /var/lib/docker/devicemapper|awk '{print $1}'` Do not need to delete. >> /home/devuser/danli/imagedel.txt
+    else echo $DATE docker storage size `sudo du -s /var/lib/docker/devicemapper|awk '{print $1}'`KB. Do not need to delete. >> /home/devuser/danli/imagedel.txt
          exit 0
 fi
 
@@ -17,7 +17,7 @@ if [ "`sudo du -s /var/lib/docker/devicemapper|awk '{print $1}'`" -gt "$GC_SIZE"
          DELSIZE=$((`cat /home/devuser/danli/imagesize.txt`-`sudo du -s /var/lib/docker/devicemapper|awk '{print $1}'`))
          echo $DATE docker storage   size `cat /home/devuser/danli/imagesize.txt` KB >> /home/devuser/danli/imagedel.txt
          echo $DATE docker storage deleted $DELSIZE KB >> /home/devuser/danli/imagedel.txt
-    else echo $DATE docker storage size `sudo du -s /var/lib/docker/devicemapper|awk '{print $1}'` Do not need to delete. >> /home/devuser/danli/imagedel.txt
+    else echo $DATE docker storage size `sudo du -s /var/lib/docker/devicemapper|awk '{print $1}'`KB. Do not need to delete. >> /home/devuser/danli/imagedel.txt
          exit 0
 fi
 
